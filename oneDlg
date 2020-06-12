@@ -339,7 +339,7 @@ void ConeDlg::OnBnClickedButton4()
 	CString jesus(strSS.c_str());
 	string strSS2 = to_string(cur->data);
 	CString jesus22(strSS2.c_str());
-	MessageBox(TEXT("找到了中间节点！内存地址为：") + jesus + TEXT("值为：") + jesus22);
+	MessageBox(TEXT("中间节点内存地址为：") + jesus + TEXT("其值为：") + jesus22);
 
 }
 

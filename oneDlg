@@ -1,0 +1,373 @@
+
+// oneDlg.cpp: 实现文件
+//
+
+#include "pch.h"
+#include "framework.h"
+#include "one.h"
+#include "oneDlg.h"
+#include "afxdialogex.h"
+#include <cstring>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#endif
+
+
+// 用于应用程序“关于”菜单项的 CAboutDlg 对话框
+
+class CAboutDlg : public CDialogEx
+{
+public:
+	CAboutDlg();
+
+// 对话框数据
+#ifdef AFX_DESIGN_TIME
+	enum { IDD = IDD_ABOUTBOX };
+#endif
+
+	protected:
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
+
+// 实现
+protected:
+	DECLARE_MESSAGE_MAP()
+};
+
+CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
+{
+}
+
+void CAboutDlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDialogEx::DoDataExchange(pDX);
+}
+
+BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
+END_MESSAGE_MAP()
+
+
+// ConeDlg 对话框
+
+
+
+ConeDlg::ConeDlg(CWnd* pParent /*=nullptr*/)
+	: CDialogEx(IDD_ONE_DIALOG, pParent)
+	, lenn(0)
+	, m_value(0)
+	, n_value(0)
+{
+	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+}
+
+void ConeDlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDialogEx::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_EDIT1, lenn);
+	DDX_Text(pDX, IDC_EDIT2, m_value);
+	DDX_Text(pDX, IDC_EDIT3, n_value);
+}
+
+BEGIN_MESSAGE_MAP(ConeDlg, CDialogEx)
+	ON_WM_SYSCOMMAND()
+	ON_WM_PAINT()
+	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BUTTON1, &ConeDlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &ConeDlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON3, &ConeDlg::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_BUTTON4, &ConeDlg::OnBnClickedButton4)
+	ON_BN_CLICKED(IDC_BUTTON5, &ConeDlg::OnBnClickedButton5)
+END_MESSAGE_MAP()
+
+
+// ConeDlg 消息处理程序
+
+BOOL ConeDlg::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+
+	// 将“关于...”菜单项添加到系统菜单中。
+
+	// IDM_ABOUTBOX 必须在系统命令范围内。
+	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
+	ASSERT(IDM_ABOUTBOX < 0xF000);
+
+	CMenu* pSysMenu = GetSystemMenu(FALSE);
+	if (pSysMenu != nullptr)
+	{
+		BOOL bNameValid;
+		CString strAboutMenu;
+		bNameValid = strAboutMenu.LoadString(IDS_ABOUTBOX);
+		ASSERT(bNameValid);
+		if (!strAboutMenu.IsEmpty())
+		{
+			pSysMenu->AppendMenu(MF_SEPARATOR);
+			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
+		}
+	}
+
+	// 设置此对话框的图标。  当应用程序主窗口不是对话框时，框架将自动
+	//  执行此操作
+	SetIcon(m_hIcon, TRUE);			// 设置大图标
+	SetIcon(m_hIcon, FALSE);		// 设置小图标
+
+	// TODO: 在此添加额外的初始化代码
+	string strSS = "30";
+	CString jesus(strSS.c_str());
+	GetDlgItem(IDC_EDIT1)->SetWindowText(jesus);
+	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
+}
+
+void ConeDlg::OnSysCommand(UINT nID, LPARAM lParam)
+{
+	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
+	{
+		CAboutDlg dlgAbout;
+		dlgAbout.DoModal();
+	}
+	else
+	{
+		CDialogEx::OnSysCommand(nID, lParam);
+	}
+}
+
+// 如果向对话框添加最小化按钮，则需要下面的代码
+//  来绘制该图标。  对于使用文档/视图模型的 MFC 应用程序，
+//  这将由框架自动完成。
+
+void ConeDlg::OnPaint()
+{
+	if (IsIconic())
+	{
+		CPaintDC dc(this); // 用于绘制的设备上下文
+
+		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
+
+		// 使图标在工作区矩形中居中
+		int cxIcon = GetSystemMetrics(SM_CXICON);
+		int cyIcon = GetSystemMetrics(SM_CYICON);
+		CRect rect;
+		GetClientRect(&rect);
+		int x = (rect.Width() - cxIcon + 1) / 2;
+		int y = (rect.Height() - cyIcon + 1) / 2;
+
+		// 绘制图标
+		dc.DrawIcon(x, y, m_hIcon);
+	}
+	else
+	{
+		CDialogEx::OnPaint();
+	}
+}
+
+//当用户拖动最小化窗口时系统调用此函数取得光标
+//显示。
+HCURSOR ConeDlg::OnQueryDragIcon()
+{
+	return static_cast<HCURSOR>(m_hIcon);
+}
+
+
+
+void ConeDlg::OnBnClickedButton1()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	UpdateData(1);
+	int wlen = lenn;
+	srand((unsigned)time(NULL));
+	JList *cur = listhead;
+	string buff = "";
+	for (int i= 1; i <= wlen; i++) {
+		cur->data= (rand() % (999 - 100)) + 100;
+		JList * newnode = new JList();
+		cur->next = newnode;
+		buff += to_string(cur->data);
+		if (i != wlen) {
+			buff += "→";
+			cur = cur->next;
+		}
+		else {
+			cur->next = nullptr;
+		}
+	}
+	CString jesus(buff.c_str());
+	GetDlgItem(IDCANCEL)->SetWindowText(jesus);
+	UpdateData(0);
+}
+
+
+void ConeDlg::OnBnClickedButton2()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	UpdateData(1);
+	JList* cur = listhead;
+	string buff1 = "", buff2 = "";
+	while(cur!=nullptr){
+		if (Mnode==nullptr&&cur->data == m_value) {
+			Mnode = cur;
+			continue;
+		}
+		if (Nnode == nullptr && cur->data == n_value) {
+			Nnode = cur;
+			listhead2 = cur->next;
+			cur->next = Mnode;
+			break;
+		}
+		cur = cur->next;
+	}
+	listtail2 = listhead2;
+	while (listtail2->next != nullptr) {
+		listtail2 = listtail2->next;
+	}
+	listtail2->next = Mnode;
+	cur = listhead;
+	while (cur != Nnode) {
+		buff1 += to_string(cur->data);
+		if (cur->next == Mnode) {
+			buff1 += "↑";
+		}
+		else {
+			buff1 += "→";
+		}
+		cur = cur->next;
+	}
+	buff1 += to_string(cur->data);
+	cur = listhead2;
+	while (cur != Mnode) {
+		buff2 += to_string(cur->data);
+		if (cur->next !=Mnode ) {
+			buff2 += "→";
+		}
+		else {
+			buff2 += "↑";
+		}
+		cur = cur->next;
+	}
+	string buff3="", buff4="";
+	cur = listhead;
+	while (cur != Nnode) {
+		if (cur->next == Mnode) {
+			buff3 += "↑";
+		}
+		else {
+			buff3 += "         ";
+		}
+		cur = cur->next;
+	}
+	cur = listhead2;
+	while (cur != Mnode) {
+		if (cur->next != Mnode) {
+			buff4 += "         ";
+		}
+		else {
+			buff4 += "↑";
+		}
+		cur = cur->next;
+	}
+	string strSS = buff1+"\n"+buff3+"\n"+buff4+"\n"+buff2;
+	CString jesus(strSS.c_str());
+	GetDlgItem(IDCANCEL)->SetWindowText(jesus);
+	UpdateData(0);
+}
+
+
+void ConeDlg::OnBnClickedButton3()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	JList* man = listhead->next; // 初始时，慢指针从头节点开始走1步
+	int i = 0;
+	bool cir = 0;
+	JList* cur = listhead;
+	JList* kuai = man->next; // 初始时，快指针从头节点开始走2步
+	while (kuai != NULL && man != NULL) { // 当单链表没有环时，循环到链表尾结束
+		i+=2;
+		if (kuai == man) {
+			MessageBox(TEXT("检测出有环！"));
+			cir = 1;
+			break;
+		}
+		man = man->next; // 慢指针每次走一步
+		cur = cur->next;
+		kuai = kuai->next;
+		if (kuai != nullptr)
+			kuai = kuai->next;
+	}
+	if (!cir) {
+		MessageBox(TEXT("检测出无环！"));
+	}
+	uintptr_t  addr = reinterpret_cast<uintptr_t>(&man);
+	string strSS = to_string(addr);
+	CString jesus(strSS.c_str());
+	GetDlgItem(IDC_EDIT4)->SetWindowText(jesus);
+	uintptr_t  addr2 = reinterpret_cast<uintptr_t>(&cur);
+	strSS = to_string(addr2);
+	CString jesus2(strSS.c_str());
+	GetDlgItem(IDC_EDIT5)->SetWindowText(jesus2);
+}
+
+void ConeDlg::OnBnClickedButton4()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	Nnode->next = listhead2;
+	listtail2->next = nullptr;
+	JList* cur = listhead;
+	string buff = "";
+	while (cur != nullptr) {
+		buff += to_string(cur->data);
+		if (cur->next != nullptr) {
+			buff += "→";
+		}
+		cur = cur->next;
+	}
+	CString jesus2(buff.c_str());
+	GetDlgItem(IDCANCEL)->SetWindowText(jesus2);
+	cur = listhead;
+	int fu = 0;
+	while (cur != nullptr) {
+		cur = cur->next;
+		fu++;
+	}
+	cur = listhead;
+	for (int i = 1; i <= fu / 2; i++) {
+		cur = cur->next;
+	}
+	uintptr_t  addr = reinterpret_cast<uintptr_t>(&cur);
+	string strSS = to_string(addr);
+	CString jesus(strSS.c_str());
+	string strSS2 = to_string(cur->data);
+	CString jesus22(strSS2.c_str());
+	MessageBox(TEXT("找到了中间节点！内存地址为：") + jesus + TEXT("值为：") + jesus22);
+
+}
+
+
+void ConeDlg::OnBnClickedButton5()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	JList* cur = listhead;
+	bool intersect = 0;
+	// * * * * * * * * * * * E
+	// S * * * * *
+	//把E和S连起来，然后判断是否有环即可。
+	Nnode->next = listhead2;
+	JList* man = listhead->next; // 初始时，慢指针从头节点开始走1步
+	JList* kuai = man->next; // 初始时，快指针从头节点开始走2步
+	while (kuai != NULL && man != NULL) { // 当单链表没有环时，循环到链表尾结束
+		if (kuai == man) {
+			MessageBox(TEXT("有相交！"));
+			intersect = 1;
+			break;
+		}
+		man = man->next; // 慢指针每次走一步
+		cur = cur->next;
+		kuai = kuai->next;
+		if (kuai != nullptr)
+			kuai = kuai->next;
+	}
+	if (!intersect) {
+		MessageBox(TEXT("无相交！"));
+	}
+}

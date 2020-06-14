@@ -319,12 +319,12 @@ void ConeDlg::OnBnClickedButton4()
 	while (cur != nullptr) {
 		buff += to_string(cur->data);
 		if (cur->next != nullptr) {
-			buff += "→";
+			buff += "—";
 		}
 		cur = cur->next;
 	}
-	CString jesus2(buff.c_str());
-	GetDlgItem(IDCANCEL)->SetWindowText(jesus2);
+	CString cong(buff.c_str());
+	GetDlgItem(IDCANCEL)->SetWindowText(cong);
 	cur = listhead;
 	int fu = 0;
 	while (cur != nullptr) {
@@ -337,10 +337,10 @@ void ConeDlg::OnBnClickedButton4()
 	}
 	uintptr_t  addr = reinterpret_cast<uintptr_t>(&cur);
 	string strSS = to_string(addr);
-	CString jesus(strSS.c_str());
+	CString cong2(strSS.c_str());
 	string strSS2 = to_string(cur->data);
 	CString jesus22(strSS2.c_str());
-	MessageBox(TEXT("中间节点内存地址为：") + jesus + TEXT("其值为：") + jesus22);
+	MessageBox(TEXT("中间节点内存地址为：") + cong2 + TEXT("其值为：") + jesus22);
 
 }
 
@@ -372,3 +372,4 @@ void ConeDlg::OnBnClickedButton5()
 		MessageBox(TEXT("无相交！"));
 	}
 }
+

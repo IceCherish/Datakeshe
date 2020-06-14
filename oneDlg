@@ -186,7 +186,7 @@ void ConeDlg::OnBnClickedButton1()
 		cur->next = newnode;
 		buff += to_string(cur->data);
 		if (i != wlen) {
-			buff += "→";
+			buff += "—";
 			cur = cur->next;
 		}
 		else {

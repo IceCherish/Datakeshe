@@ -339,8 +339,8 @@ void ConeDlg::OnBnClickedButton4()
 	string strSS = to_string(addr);
 	CString cong2(strSS.c_str());
 	string strSS2 = to_string(cur->data);
-	CString jesus22(strSS2.c_str());
-	MessageBox(TEXT("中间节点内存地址为：") + cong2 + TEXT("其值为：") + jesus22);
+	CString cong3(strSS2.c_str());
+	MessageBox(TEXT("中间节点内存地址为：") + cong2 + TEXT("其值为：") + cong3);
 
 }
 

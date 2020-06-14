@@ -224,13 +224,14 @@ void ConeDlg::OnBnClickedButton2()
 	}
 	listtail2->next = Mnode;
 	cur = listhead;
+
 	while (cur != Nnode) {
 		buff1 += to_string(cur->data);
 		if (cur->next == Mnode) {
-			buff1 += "↑";
+			buff1 += "|";
 		}
 		else {
-			buff1 += "→";
+			buff1 += "—";
 		}
 		cur = cur->next;
 	}
@@ -239,10 +240,10 @@ void ConeDlg::OnBnClickedButton2()
 	while (cur != Mnode) {
 		buff2 += to_string(cur->data);
 		if (cur->next !=Mnode ) {
-			buff2 += "→";
+			buff2 += "—";
 		}
 		else {
-			buff2 += "↑";
+			buff2 += "|";
 		}
 		cur = cur->next;
 	}
@@ -250,7 +251,7 @@ void ConeDlg::OnBnClickedButton2()
 	cur = listhead;
 	while (cur != Nnode) {
 		if (cur->next == Mnode) {
-			buff3 += "↑";
+			buff3 += "|";
 		}
 		else {
 			buff3 += "         ";
@@ -263,7 +264,7 @@ void ConeDlg::OnBnClickedButton2()
 			buff4 += "         ";
 		}
 		else {
-			buff4 += "↑";
+			buff4 += "|";
 		}
 		cur = cur->next;
 	}
